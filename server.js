@@ -152,6 +152,17 @@ function loginFn(req, res, next) {
 }
 
 app.get('/search', function(req, res) {
+  let condition = [
+    {
+      $search : {
+        index : 'todoSearch',
+        text : {
+          query : req.query.value,
+          path: '할일'
+        }
+      }
+    }
+  ]
   console.log(req.query);
   db.collection('post').find({$text: {$search : req.query.value}}).toArray((error, result) => {
     console.log(result);
